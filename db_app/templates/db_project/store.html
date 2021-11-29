@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Store</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" media="screen" href="{% static 'styles.css' %}" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <style>
+	html,
+	body {
+		margin: 0;
+	}
+	
+	.banner {
+		background: #e17327;
+	}
+	.banner__content{
+		padding: 10px;
+		max-width: 500px;
+		margin: 0 auto;
+		display: flex;
+		align-items: center;
+	}
+	
+	.banner__text{
+		flex-grow: 1;
+		line-height 1.4;
+		font-family: 'Quicksand', sans-serif;
+	}
+	
+	.banner__close {
+		background: none;
+		border: none;
+		cursor: pointer;
+		right: 100px;
+		position: absolute;
+		right: 0;
+		
+	}
+	
+	
+	h1 {text-align: center;}
+  </style>
+</head>
+<body>
+  <h1>Welcome to the Store!</h1>
+  
+  <div class ="banner">
+	<div class="banner__content">
+		<div class ="banner__text">
+			<strong>Don't forget to check out the new items from our Fall Sale!</strong>
+		</div>
+		<button class="banner__close" type="button">
+			<span class="material-icons">
+				cancel
+			</span>
+		</button>
+	</div>
+  </div>
+  <script>
+	document.querySelector(".banner__close").addEventListener("click", function() {
+		this.closest(".banner").style.display = "none";
+	});
+  </script>
+  </div>
+  {% for Item in store_list %}
+    <strong>{{ Item }}</strong>
+	<ul>
+	<li>SKU: {{Item.SKU}}</li>
+	<li>Price: {{Item.Price}}</li>
+	<li>Discount: {{Item.Discount}}</li>
+	</ul>
+  {% endfor %}
+</body>
+</html>
