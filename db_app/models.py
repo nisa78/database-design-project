@@ -25,47 +25,47 @@ class WeeklyAd(models.Model):
 		return 'Week {}: {}'.format(self.Week, self.Lists)
 
 class Customer(models.Model):
-	UserID = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=False, unique=True, primary_key=True)
+	User = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=False, unique=True, primary_key=True)
 	DOB = models.DateField()
 	views = models.ForeignKey(to=WeeklyAd, on_delete=models.PROTECT)
 
 class Subscriber(models.Model):
-	UserID = models.ForeignKey(to=Customer, on_delete=models.CASCADE, null=False, unique=True, primary_key=True)
+	User = models.ForeignKey(to=Customer, on_delete=models.CASCADE, null=False, unique=True, primary_key=True)
 	SubscriptionDate = models.DateField()
 
 class SubOnlyItem(models.Model):
-	SKU = models.ForeignKey(to=Item, on_delete=models.CASCADE, unique=True, null=False, primary_key=True)
+	Item = models.ForeignKey(to=Item, on_delete=models.CASCADE, unique=True, null=False, primary_key=True)
 
 class Preorders(models.Model):
-	UserID = models.ForeignKey(to=Subscriber, unique=True, null=False, on_delete=models.PROTECT)
-	SKU = models.ForeignKey(to=Item, unique=True, null=False, on_delete=models.PROTECT)
+	User = models.ForeignKey(to=Subscriber, unique=True, null=False, on_delete=models.PROTECT)
+	Item = models.ForeignKey(to=Item, unique=True, null=False, on_delete=models.PROTECT)
 
 	class Meta:
 		# Django only supports single-column primary keys: 
 		# https://stackoverflow.com/questions/16800375/how-can-i-set-two-primary-key-fields-for-my-models-in-django
 		# This is the closest we can get to replicating the effect.
-		unique_together = (("UserID", "SKU"))
+		unique_together = (("User", "Item"))
 
 class PreordersSubItem(models.Model):
-	UserID = models.ForeignKey(to=Subscriber, unique=True, null=False, on_delete=models.PROTECT)
-	SKU = models.ForeignKey(to=SubOnlyItem, unique=True, null=False, on_delete=models.PROTECT)
+	User = models.ForeignKey(to=Subscriber, unique=True, null=False, on_delete=models.PROTECT)
+	Item = models.ForeignKey(to=SubOnlyItem, unique=True, null=False, on_delete=models.PROTECT)
 
 	class Meta:
-		unique_together = (("UserID", "SKU"))
+		unique_together = (("User", "Item"))
 
 class BuysSubItem(models.Model):
-	UserID = models.ForeignKey(to=Subscriber, unique=True, null=False, on_delete=models.PROTECT)
-	SKU = models.ForeignKey(to=SubOnlyItem, unique=True, null=False, on_delete=models.PROTECT)
+	User = models.ForeignKey(to=Subscriber, unique=True, null=False, on_delete=models.PROTECT)
+	Item = models.ForeignKey(to=SubOnlyItem, unique=True, null=False, on_delete=models.PROTECT)
 
 	class Meta:
-		unique_together = (("UserID", "SKU"))
+		unique_together = (("User", "Item"))
 
 class Buys(models.Model):
-	UserID = models.ForeignKey(to=Customer, unique=True, null=False, on_delete=models.PROTECT)
-	SKU = models.ForeignKey(to=Item, unique=True, null=False, on_delete=models.PROTECT)
+	User = models.ForeignKey(to=Customer, unique=True, null=False, on_delete=models.PROTECT)
+	Item = models.ForeignKey(to=Item, unique=True, null=False, on_delete=models.PROTECT)
 
 	class Meta:
-		unique_together = (("UserID", "SKU"))
+		unique_together = (("User", "Item"))
 
 
 def calculate_age(born):
