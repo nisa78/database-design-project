@@ -46,8 +46,8 @@ class SubOnlyItem(models.Model):
 		return str(self.Item.Name)
 
 class Preorders(models.Model):
-	User = models.ForeignKey(to=Customer, unique=True, null=False, on_delete=models.PROTECT)
-	Item = models.ForeignKey(to=Item, unique=True, null=False, on_delete=models.PROTECT)
+	User = models.ForeignKey(to=Customer, null=False, on_delete=models.PROTECT)
+	Item = models.ForeignKey(to=Item, null=False, on_delete=models.PROTECT)
 
 	class Meta:
 		# Django only supports single-column primary keys: 
@@ -60,8 +60,8 @@ class Preorders(models.Model):
 
 
 class PreordersSubItem(models.Model):
-	User = models.ForeignKey(to=Subscriber, unique=True, null=False, on_delete=models.PROTECT)
-	Item = models.ForeignKey(to=SubOnlyItem, unique=True, null=False, on_delete=models.PROTECT)
+	User = models.ForeignKey(to=Subscriber, null=False, on_delete=models.PROTECT)
+	Item = models.ForeignKey(to=SubOnlyItem, null=False, on_delete=models.PROTECT)
 
 	class Meta:
 		unique_together = (("User", "Item"))
@@ -70,8 +70,8 @@ class PreordersSubItem(models.Model):
 		return '{} preorders: {}'.format(self.User.User.User.username, self.Item.Item.Name)
 
 class BuysSubItem(models.Model):
-	User = models.ForeignKey(to=Subscriber, unique=True, null=False, on_delete=models.PROTECT)
-	Item = models.ForeignKey(to=SubOnlyItem, unique=True, null=False, on_delete=models.PROTECT)
+	User = models.ForeignKey(to=Subscriber, null=False, on_delete=models.PROTECT)
+	Item = models.ForeignKey(to=SubOnlyItem, null=False, on_delete=models.PROTECT)
 
 	class Meta:
 		unique_together = (("User", "Item"))
@@ -80,8 +80,8 @@ class BuysSubItem(models.Model):
 		return '{} preorders: {}'.format(self.User.User.User.username, self.Item.Item.Name)
 
 class Buys(models.Model):
-	User = models.ForeignKey(to=Customer, unique=True, null=False, on_delete=models.PROTECT)
-	Item = models.ForeignKey(to=Item, unique=True, null=False, on_delete=models.PROTECT)
+	User = models.ForeignKey(to=Customer, null=False, on_delete=models.PROTECT)
+	Item = models.ForeignKey(to=Item, null=False, on_delete=models.PROTECT)
 
 	class Meta:
 		unique_together = (("User", "Item"))

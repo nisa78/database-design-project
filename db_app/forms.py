@@ -1,4 +1,8 @@
 from django import forms
+from django.db.models import query
+from django.db.models.base import Model
+from django.forms import ModelForm
+from .models import Item, SubOnlyItem
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
@@ -12,6 +16,14 @@ class CreateUserForm(UserCreationForm):
 class SubForm(forms.Form):
   subscribed = forms.BooleanField(required=True)
 
-class CustomerShopForm(forms.Form):
-  preorders = forms.BooleanField(required=False)
-  buys = forms.BooleanField(required=False)
+class BuysForm(forms.Form):
+  buy = forms.ModelChoiceField(queryset=Item.objects.all())
+
+class PreorderForm(forms.Form):
+  preorder = forms.ModelChoiceField(queryset=Item.objects.all())
+
+class SubBuysForm(forms.Form):
+  buy = forms.ModelChoiceField(queryset=SubOnlyItem.objects.all())
+
+class SubPreorderForm(forms.Form):
+  preorder = forms.ModelChoiceField(queryset=SubOnlyItem.objects.all())

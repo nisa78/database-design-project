@@ -92,6 +92,21 @@
 		this.closest(".banner").style.display = "none";
 	});
   </script>
+
+	{% if messages %}
+		{% for message in messages %}
+			{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+			<div class="alert alert-danger" role="alert">
+				{{ message }}
+			</div>
+			{% else %}
+			<div class="alert alert-success" role="alert">
+				{{ message }}
+			</div>
+			{% endif %}
+		{% endfor %}
+	{% endif %}
+
   </div>
   {% for Item in store_list %}
     <strong>{{ Item }}</strong>
@@ -101,5 +116,30 @@
 	<li>Discount: {{Item.Discount}}</li>
 	</ul>
   {% endfor %}
+
+	<div class="form">
+		<form method="POST">
+			{% csrf_token %}
+			{{ buysform }}
+			<div class="form-group">
+				{% if user.is_authenticated and not user.is_superuser %}
+				<button class="btn btn-info" type="submit">Submit</button>
+				{% endif %}
+			</div>
+		</form>
+	</div>
+  <br>
+	<div class="form">
+		<form method="POST">
+			{% csrf_token %}
+			{{ preordersform }}
+			<div class="form-group">
+				{% if user.is_authenticated and not user.is_superuser %}
+				<button class="btn btn-info" type="submit">Submit</button>
+				{% endif %}
+			</div>
+		</form>
+	</div>
+
 </body>
 </html>
