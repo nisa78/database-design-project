@@ -11,22 +11,8 @@ def home(request):
   return render(request, 'db_project/home.html', {"weekly_ads": weekly_ads})
 
 def substore(request):
-  if request.user.is_authenticated:
-    try:
-      # Test if user is not considered a customer (AKA Superusers)
-      Customer.objects.get(User = request.user)
-    except:
-      # Return to registration if not a customer
-      return redirect('db_project-registration')
-    if Subscriber.objects.get(User = Customer.objects.get(User = request.user)):
-      substore_list = SubOnlyItem.objects.raw('SELECT * FROM db_app_subonlyitem')
-      return render(request, 'db_project/substore.html', {'store_list': substore_list})
-    else:
-      # Logged in but not subscribed, send to make a new account
-      return redirect('db_project-registration')
-  else:
-    # Not logged in
-    return redirect('login')
+  substore_list = SubOnlyItem.objects.raw('SELECT * FROM db_app_subonlyitem')
+  return render(request, 'db_project/substore.html', {'store_list': substore_list})
 
 def store(request):
   store_list = Item.objects.raw('SELECT SKU FROM db_app_item EXCEPT SELECT * FROM db_app_subonlyitem')

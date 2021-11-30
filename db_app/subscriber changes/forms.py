@@ -11,7 +11,3 @@ class CreateUserForm(UserCreationForm):
 
 class SubForm(forms.Form):
   subscribed = forms.BooleanField(required=True)
-
-class CustomerShopForm(forms.Form):
-  preorders = forms.BooleanField(required=False)
-  buys = forms.BooleanField(required=False)

@@ -39,13 +39,41 @@
 		right: 0;
 		
 	}
-	
+	.moveright{
+
+	width: 700px;
+	float: right;
+	}
 	
 	h1 {text-align: center;}
   </style>
 </head>
 <body>
-  <h1>Welcome to the Store!</h1>
+  
+  <h1><button onclick="window.location.href='/'">
+  HOME
+  </button>
+  Welcome to the Store!
+  <button onclick="window.location.href='substore'">
+  SUBSCRIBER STORE
+  </button>
+ <div class="moveright">
+{% if user.is_authenticated %}
+    Welcome {{ user.username }}!
+	<button onclick="window.location.href='logout'">
+  Logout
+  </button>
+{% else %}
+    Not logged in.
+	<button onclick="window.location.href='login'">
+  Login
+  </button>
+  <button onclick="window.location.href='registration'">
+  Register
+  </button>
+{% endif %}
+  </div>
+  </h1>
   
   <div class ="banner">
 	<div class="banner__content">

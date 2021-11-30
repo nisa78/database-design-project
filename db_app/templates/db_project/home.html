@@ -45,11 +45,42 @@
 	
 	
 	h1 {text-align: center;}
+	
+	.moveright{
+
+	width: 700px;
+	float: right;
+	}
   </style>
 </head>
 <body>
-  <h1>Super Mega Store Of Exotic Things!</h1>
+
+  <h1>
   
+  Super Mega Store Of Exotic Things!
+  <button onclick="window.location.href='store'">
+  STORE
+  </button>
+  <button onclick="window.location.href='substore'">
+  SUBSCRIBER STORE
+  </button>
+ <div class="moveright">
+{% if user.is_authenticated %}
+    Welcome {{ user.username }}!
+	<button onclick="window.location.href='logout'">
+  Logout
+  </button>
+{% else %}
+    Not logged in.
+	<button onclick="window.location.href='login'">
+  Login
+  </button>
+  <button onclick="window.location.href='registration'">
+  Register
+  </button>
+{% endif %}
+  </div>
+</h1>
   <div class ="banner">
 	<div class="banner__content">
 		<div class ="banner__text">
